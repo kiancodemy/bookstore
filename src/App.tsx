@@ -1,26 +1,17 @@
-import { useState } from "react";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Authentication from "./components/Authentication/Authentication";
+import AuthenticationSkeleton from "./components/Authentication/AuthenticationSkeleton";
 
 function App() {
-  const [count, setCount] = useState(101);
-
-  const a = () => {
-    if (count < 110) {
-      setCount((prev) => prev + 1);
-      console.log(count);
-    }
-  };
-
   return (
-    <div>
-      <button
-        onClick={() => a()}
-        style={{ backgroundColor: "blue", color: "white" }}
-      >
-        click
-      </button>
-      <button>{count}</button>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Authentication />}>
+          <Route index element={<AuthenticationSkeleton ></AuthenticationSkeleton>}></Route>
+        </Route>
+      </Routes>
+    </>
   );
 }
 
