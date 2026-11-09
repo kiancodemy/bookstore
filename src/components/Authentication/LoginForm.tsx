@@ -75,7 +75,7 @@ export default function LoginForm({select}:SelectType) {
       <button className="bg-blue-500 text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
         ورود
       </button>
-      <span onClick={()=>select("forgetpassword")} className="self-start text-sm cursor-pointer ">
+      <span onClick={()=>select("forgetpassword")} className="hover:underline  underline-offset-7 decoration-solid decoraion-1 self-start text-sm cursor-pointer ">
         فراموشی رمز عبور
       </span>
       <button

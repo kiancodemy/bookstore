@@ -2,7 +2,10 @@ import { FiEye } from "react-icons/fi";
 import { FiEyeOff } from "react-icons/fi";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-export default function SignUpForm() {
+type SelectType = {
+  select: React.Dispatch<React.SetStateAction<string>>;
+};
+export default function SignUpForm({ select }: SelectType) {
   type LoginFormValues = {
     email: string;
     name: string;
@@ -29,10 +32,9 @@ export default function SignUpForm() {
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-col">
           <input
-          placeholder="نام"
+            placeholder="نام"
             {...register("name", {
               required: "نام الزامی است",
-             
             })}
             className="p-2  placeholder:text-sm placeholder:md:text-base border-bordercolor border focus  focus:border-transparent  rounded-md focus:placeholder:text-transparent focus:outline-2 focus:outline-blue-500"
             type="text"
@@ -42,12 +44,10 @@ export default function SignUpForm() {
           </span>
         </div>
         <div className="flex flex-col">
-          
           <input
-          placeholder="نام خانوادگی"
+            placeholder="نام خانوادگی"
             {...register("lastname", {
               required: "نام خانوادگی الزامی است",
-             
             })}
             className="p-2  placeholder:text-sm placeholder:md:text-base border-bordercolor border focus  focus:border-transparent  rounded-md focus:placeholder:text-transparent focus:outline-2 focus:outline-blue-500"
             type="text"
@@ -57,9 +57,8 @@ export default function SignUpForm() {
           </span>
         </div>
         <div className="flex flex-col">
-          
           <input
-          placeholder="ایمیل"
+            placeholder="ایمیل"
             {...register("email", {
               required: "ایمیل الزامی است",
               pattern: {
@@ -108,6 +107,12 @@ export default function SignUpForm() {
 
       <button className="bg-green text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
         ثبت نام
+      </button>
+      <button
+        onClick={() => select("login")}
+        className="bg-green text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+      >
+        بازگشت
       </button>
     </form>
   );

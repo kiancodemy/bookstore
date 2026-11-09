@@ -1,0 +1,64 @@
+import { useState, useEffect } from "react";
+
+type IranTimeParts = {
+  weekday?: string;
+  year?: string;
+  month?: string;
+  day?: string;
+  hour?: string;
+  minute?: string;
+  second?: string;
+  dayPeriod?: string;
+};
+
+export default function Watch() {
+  const [parts, setParts] = useState<IranTimeParts>({});
+
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      const formatter = new Intl.DateTimeFormat("fa-IR", {
+        timeZone: "Asia/Tehran",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        weekday: "long",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+
+      // formatToParts returns an array like:
+      // [{type:'weekday', value:'دوشنبه'}, {type:'year', value:'۱۴۰۳'}, ...]
+      const result = {};
+      formatter.formatToParts(now).forEach(({ type, value }) => {
+        if (type !== "literal") {
+          (result as Record<string, string>)[type] = value;
+        }
+      });
+
+      setParts(result);
+    };
+
+    update();
+    const timer = setInterval(update, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="flex *:text-sm  *:text-green gap-x-2" dir="rtl">
+      <div className="flex gap-x-1">
+        <span>{parts.weekday}</span>
+        <span>{parts.day}</span>
+        <span>ماه: {parts.month}</span>
+        <span>{parts.year}</span>
+      </div>
+      <div>-</div>
+
+      <span>
+        {parts.hour}:{parts.minute}:<span>{parts.second}</span>
+      </span>
+    </div>
+  );
+}
