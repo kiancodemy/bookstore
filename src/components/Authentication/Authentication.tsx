@@ -8,9 +8,9 @@ export default function Authentication() {
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const timer = setTimeout(() => {
+      setLoading(false);
       setOpen(true);
       console.log("it is done ");
-      setLoading(false);
     }, 50);
     return () => {
       clearTimeout(timer);
@@ -20,7 +20,14 @@ export default function Authentication() {
   return (
     <div>
       {loading && <Loading></Loading>}
-      {open && <Outlet></Outlet>}
+      {open && (
+        <div>
+          <Outlet></Outlet>
+          <div className="bg-black px-5 py-30  text-white flex justify-center items-center text-4xl">
+            <p>فوتر</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

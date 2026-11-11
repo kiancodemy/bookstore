@@ -10,6 +10,20 @@ type IranTimeParts = {
   second?: string;
   dayPeriod?: string;
 };
+const months: Record<string, string> = {
+  "01": "فروردین",
+  "02": "اردیبهشت",
+  "03": "خرداد",
+  "04": "تیر",
+  "05": "مرداد",
+  "06": "شهریور",
+  "07": "مهر",
+  "08": "آبان",
+  "09": "آذر",
+  "10": "دی",
+  "11": "بهمن",
+  "12": "اسفند",
+};
 
 export default function Watch() {
   const [parts, setParts] = useState<IranTimeParts>({});
@@ -20,7 +34,7 @@ export default function Watch() {
       const formatter = new Intl.DateTimeFormat("fa-IR", {
         timeZone: "Asia/Tehran",
         year: "numeric",
-        month: "2-digit",
+        month: "long",
         day: "2-digit",
         weekday: "long",
         hour: "2-digit",
@@ -48,10 +62,10 @@ export default function Watch() {
 
   return (
     <div className="flex *:text-sm  *:text-green gap-x-2" dir="rtl">
-      <div className="flex gap-x-1">
+      <div className="flex gap-x-2">
         <span>{parts.weekday}</span>
         <span>{parts.day}</span>
-        <span>ماه: {parts.month}</span>
+        <span>{parts.month}</span>
         <span>{parts.year}</span>
       </div>
       <div>-</div>

@@ -1,29 +1,41 @@
 import { FiEye } from "react-icons/fi";
 import { FiEyeOff } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { type signInType } from "@/type/Authnetication.Type";
+import toasters from "@/utility/toaster";
+import { useSignIn } from "@/hooks/signup";
 type SelectType = {
   select: React.Dispatch<React.SetStateAction<string>>;
 };
 export default function SignUpForm({ select }: SelectType) {
-  type LoginFormValues = {
-    email: string;
-    name: string;
-    lastname: string;
-    password: string;
-  };
+  const navigation = useNavigate();
+
   const [hide, setHide] = useState(true);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormValues>({
+  } = useForm<signInType>({
     mode: "onTouched",
   });
-
-  const onSubmit = (data) => {
-    console.log(data);
+  /// login request ////
+  const { mutate, isPending, isError, data, error, isSuccess } = useSignIn();
+  console.log(data);
+  const onSubmit = (datas: signInType) => {
+    mutate(datas);
   };
+  useEffect(() => {
+    if (isError) {
+      toasters("error", error.response?.data.message);
+    }
+    if (isSuccess) {
+      toasters("success", data.message);
+      navigation("/admin");
+    }
+  }, [isError, error, isSuccess, data?.message, navigation]);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

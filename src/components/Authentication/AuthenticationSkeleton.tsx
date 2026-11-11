@@ -6,8 +6,8 @@ import SignUpForm from "./SignupForm";
 export default function AuthenticationSkeleton() {
   const [loginType, setLoginType] = useState<string>("login");
   return (
-    <div className="pb-48  bg-gray-100 pt-7 items-start md:pt-25 justify-center flex">
-      <div className="flex gap-y-10 bg-white max-w-9/10 mx-auto md:max-w-sm  container rounded-md  p-7 flex-col">
+    <div className="pb-20  bg-gray-50 pt-7 items-start md:pt-25 justify-center flex">
+      <div className="flex gap-y-10 shadow-lg bg-white max-w-9/10 mx-auto md:max-w-sm  container rounded-md  p-7 flex-col">
         {loginType !== "forgetpassword" && (
           <div className="grid  cursor-pointer   rounded-md p-2 bg-gray-200 grid-cols-2">
             <button

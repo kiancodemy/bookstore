@@ -6,7 +6,7 @@
     --font-farsi-bold: "farsi-bold", sans-serif;
     --font-farsi: "farsi", sans-serif;
     --color-background:#fdfdfd;
-    --color-primary:var(--color-blue-500);
+    --color-primarys:var(--color-blue-500);
     --color-green:#2A7C13;
     --color-bordercolor:#adb5bd;
   
@@ -16,7 +16,7 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+  box-sizing: border
 }
 @layer base{
 
@@ -44,6 +44,8 @@
 
 @font-face {
 font-family: farsi;
+ font-weight: 400;
+ font-display: swap;
  
   src: url("./assets/fonts/IRANYekanX-Regular.woff2") format("woff2");
 }

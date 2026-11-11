@@ -2,6 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Authentication from "./components/Authentication/Authentication";
 import { lazy, Suspense } from "react";
+import A from "./components/admin/A";
 import AdminSkeleton from "./components/admin/AdminSkeleton";
 import Loading from "./components/Loading/Loading";
 const AuthenticationSkeleton = lazy(
@@ -12,7 +13,7 @@ const ResetPassword = lazy(
 );
 function App() {
   return (
-    <>
+    <div>
       <Routes>
         <Route path="/" element={<Authentication />}>
           <Route
@@ -40,8 +41,9 @@ function App() {
             }
           ></Route>
         </Route>
+        
       </Routes>
-    </>
+    </div>
   );
 }
 

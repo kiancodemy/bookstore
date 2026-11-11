@@ -1,29 +1,53 @@
 import { FiEye } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { type LoginType } from "@/type/Authnetication.Type";
+import { useLogin } from "@/hooks/logIn";
 import { useForm } from "react-hook-form";
+import toasters from "@/utility/toaster";
+
+
 type SelectType = {
-select: React.Dispatch<React.SetStateAction<string>>
+  select: React.Dispatch<React.SetStateAction<string>>;
 };
-export default function LoginForm({select}:SelectType) {
-  type LoginFormValues = {
-    email: string;
-    password: string;
-  };
- 
+export default function LoginForm({ select }: SelectType) {
+
+  /// navigation fucntion
+  const navigate = useNavigate(); 
+
+
   const [hide, setHide] = useState(true);
+  //// react hook form setting ////
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormValues>({
+  } = useForm<LoginType>({
     mode: "onTouched",
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  
+  
+
+  /// login request  by react router////
+  const { mutate, isPending, isError, data, error,isSuccess } = useLogin();
+
+  const onSubmit = (datas: LoginType) => {
+    mutate(datas);
   };
+  /// handling error or succes message ////
+  useEffect(()=>{
+    if(isError){
+      toasters("error",error.response?.data.message)
+    }
+    if(isSuccess){
+      toasters("success",data.message)
+      navigate("/admin"); 
+    }
+  },[isError,error,isSuccess,data?.message,navigate])
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -72,17 +96,20 @@ export default function LoginForm({select}:SelectType) {
           {errors?.password?.message}
         </span>
       </div>
-      <button className="bg-blue-500 text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
+      <button disabled={isPending} className="bg-blue-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
         ورود
       </button>
-      <span onClick={()=>select("forgetpassword")} className="hover:underline  underline-offset-7 decoration-solid decoraion-1 self-start text-sm cursor-pointer ">
+      <span
+        onClick={() => select("forgetpassword")}
+        className="hover:underline  underline-offset-7 decoration-solid decoraion-1 self-start text-sm cursor-pointer "
+      >
         فراموشی رمز عبور
       </span>
       <button
         type="submit"
         className="flex cursor-pointer text-base hover:bg-gray-100 justify-center items-center gap-x-2.5 border-bordercolor border rounded-md py-2 px-6"
       >
-        <span className="text-sm md:text-base">ورود با گوگل</span>
+        <span className="text-sm md:text-base ">ورود با گوگل</span>
         <span className="text-2xl">
           <FcGoogle></FcGoogle>
         </span>

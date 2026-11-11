@@ -1,6 +1,4 @@
-import { FiEye } from "react-icons/fi";
-import { FiEyeOff } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 type SelectType = {
