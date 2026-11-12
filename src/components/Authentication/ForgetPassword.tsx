@@ -1,27 +1,38 @@
-
-import { useState } from "react";
+import toasters from "@/utility/toaster";
+import { type forgetpassword } from "@/type/Authnetication.Type";
 import { useForm } from "react-hook-form";
-type SelectType = {
-select: React.Dispatch<React.SetStateAction<string>>
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useForgetPassword } from "@/hooks/forgetPassword";
+type selectType = {
+  select: React.Dispatch<React.SetStateAction<string>>;
 };
-export default function ForgetPassword({select}:SelectType) {
-  type LoginFormValues = {
-    email: string;
-   
-  };
-  
-  const [hide, setHide] = useState(true);
+export default function ForgetPassword({ select }: selectType) {
+  const navigate=useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormValues>({
+  } = useForm<forgetpassword>({
     mode: "onTouched",
   });
-
-  const onSubmit = (data) => {
-    console.log(data);
+  /// react querty settting ///
+  const { mutate, isPending, isError, data, error, isSuccess } =
+    useForgetPassword();
+  const onSubmit = (data: forgetpassword) => {
+    mutate(data);
   };
+  /// handling error or succes message ////
+  useEffect(() => {
+    if (isError) {
+      toasters("error", error.response?.data.message);
+    }
+    if (isSuccess) {
+      toasters("success", data.message);
+      navigate("/")
+    }
+  }, [isError, error, isSuccess, data?.message, navigate]);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -45,16 +56,20 @@ export default function ForgetPassword({select}:SelectType) {
           {errors?.email?.message}
         </span>
       </div>
-    
-      <button className="bg-blue-500 text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
+
+      <button
+        disabled={isPending}
+        className="bg-blue-500 disabled:bg-gray-300 text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+      >
         درخواست تغییر رمز
       </button>
-      
-      <button onClick={()=>select("login")} className="bg-blue-500 text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
+
+      <button
+        onClick={() => select("login")}
+        className="bg-blue-500 text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+      >
         بازگشت
       </button>
-    
-    
     </form>
   );
 }

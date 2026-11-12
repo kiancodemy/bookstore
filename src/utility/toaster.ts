@@ -1,4 +1,7 @@
 import { toast, Flip } from "react-toastify";
+
+
+/// success or failure nothification by useing toastify dependenciy ////
 const toasters = (type: string, message?: string) => {
   if (type.toLowerCase() === "success") {
     toast.success(message, {

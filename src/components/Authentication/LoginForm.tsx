@@ -1,6 +1,8 @@
 import { FiEye } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { FiEyeOff } from "react-icons/fi";
+import useAuthStore from "@/store/useAuthStore";
+
 import { FcGoogle } from "react-icons/fc";
 import { useState,useEffect } from "react";
 import { type LoginType } from "@/type/Authnetication.Type";
@@ -16,6 +18,11 @@ export default function LoginForm({ select }: SelectType) {
 
   /// navigation fucntion
   const navigate = useNavigate(); 
+
+
+  // zustand wjt token setterr //
+  const setJwtToken=useAuthStore((s)=>s.setJwtToken);
+  
 
 
   const [hide, setHide] = useState(true);
@@ -44,9 +51,10 @@ export default function LoginForm({ select }: SelectType) {
     }
     if(isSuccess){
       toasters("success",data.message)
+      setJwtToken(typeof data.data==="string"?data.data:null);
       navigate("/admin"); 
     }
-  },[isError,error,isSuccess,data?.message,navigate])
+  },[isError,error,isSuccess,data?.message,navigate,setJwtToken,data?.data])
 
   return (
     <form
@@ -99,12 +107,12 @@ export default function LoginForm({ select }: SelectType) {
       <button disabled={isPending} className="bg-blue-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
         ورود
       </button>
-      <span
-        onClick={() => select("forgetpassword")}
+      <button
+       onClick={()=>select("forgetpassword")}
         className="hover:underline  underline-offset-7 decoration-solid decoraion-1 self-start text-sm cursor-pointer "
       >
         فراموشی رمز عبور
-      </span>
+      </button>
       <button
         type="submit"
         className="flex cursor-pointer text-base hover:bg-gray-100 justify-center items-center gap-x-2.5 border-bordercolor border rounded-md py-2 px-6"
@@ -113,6 +121,7 @@ export default function LoginForm({ select }: SelectType) {
         <span className="text-2xl">
           <FcGoogle></FcGoogle>
         </span>
+       
       </button>
     </form>
   );

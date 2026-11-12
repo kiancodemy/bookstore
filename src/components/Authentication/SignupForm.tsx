@@ -28,6 +28,7 @@ export default function SignUpForm({ select }: SelectType) {
   };
   useEffect(() => {
     if (isError) {
+      
       toasters("error", error.response?.data.message);
     }
     if (isSuccess) {

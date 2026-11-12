@@ -61,7 +61,7 @@ export default function Watch() {
   }, []);
 
   return (
-    <div className="flex *:text-sm  *:text-green gap-x-2" dir="rtl">
+    <div className="flex *:text-xs  *:md:text-sm  *:text-green py-1 gap-x-2" dir="rtl">
       <div className="flex gap-x-2">
         <span>{parts.weekday}</span>
         <span>{parts.day}</span>

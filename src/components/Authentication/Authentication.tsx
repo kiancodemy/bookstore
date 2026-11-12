@@ -1,33 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Loading from "../Loading/Loading";
-/// when user enters the site for first time it reload the user information by reset token if is not expired ///
+import { refreshToken } from "@/hooks/RefreshToken";
+interface AuthenticationProps {
+  /** set false to disable the unmount guard */
+  cancelOnUnmount?: boolean;
+}
 
-export default function Authentication() {
-  const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
+export default function Authentication({
+  cancelOnUnmount = true,
+}: AuthenticationProps) {
+  const [ready, setReady] = useState(false);
+  
+ 
+  const alive = useRef(true);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-      setOpen(true);
-      console.log("it is done ");
-    }, 50);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+   
+    alive.current = true;
 
-  return (
-    <div>
-      {loading && <Loading></Loading>}
-      {open && (
-        <div>
-          <Outlet></Outlet>
-          <div className="bg-black px-5 py-30  text-white flex justify-center items-center text-4xl">
-            <p>فوتر</p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+    const bootstrap = async () => {
+      try {
+       await refreshToken();
+     
+      } catch {
+        // token already cleared in onError
+      } finally {
+        // only skip when the guard is enabled AND we've unmounted
+        if (cancelOnUnmount && !alive.current) return;
+        setReady(true);
+       
+      }
+    };
+
+    bootstrap();
+
+    return () => {
+      if (cancelOnUnmount) alive.current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cancelOnUnmount]);
+
+  if (!ready) return <Loading />;
+
+  return <Outlet />;
 }
