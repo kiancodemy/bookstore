@@ -1,6 +1,4 @@
-
-export const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:9091";
+export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:9091";
 
 export const ENDPOINTS = {
   LOGIN: "/api/v1/auth/login",
@@ -9,8 +7,8 @@ export const ENDPOINTS = {
   FORGETPASSWORD: "/api/v1/auth/forgetPassword",
   RESETPASSWORD: "/api/v1/auth/resetPassword",
   REFRESHTOKEN: "/api/v1/auth/refreshtoken/verify",
-
+  allCategory:"/api/v1/admin/categories",
 };
 
 // helper to build full URLs
-export const apiUrl = (endpoint:string) => `${API_URL}${endpoint}`;
+export const apiUrl = (endpoint: string) => `${API_URL}${endpoint}`;

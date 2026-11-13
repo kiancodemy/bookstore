@@ -1,15 +1,11 @@
 import { FiEye } from "react-icons/fi";
 import { FiEyeOff } from "react-icons/fi";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import toasters from "@/utility/toaster";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { useResetPassword } from "@/hooks/resetPassword";
+import { useResetPassword } from "@/hooks/authentication/resetPassword";
 export default function ResetPassword() {
-
-  const navigate=useNavigate();
   /// get token query params  ///
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token"); // "309159"
@@ -25,24 +21,11 @@ export default function ResetPassword() {
     mode: "onTouched",
   });
 
-  const { mutate, isPending, isError, data, error, isSuccess } =
-    useResetPassword();
+  const { mutate, isPending } = useResetPassword();
 
   const onSubmit = (data: ResetPassword) => {
-    
-    console.log({ token: token || null, newPassword: data.password });
     mutate({ token: token || null, newPassword: data.password });
   };
-  useEffect(() => {
-    if (isError) {
-    
-      toasters("error", error.response?.data.message);
-    }
-    if (isSuccess) {
-      toasters("success", data.message);
-      navigate("/")
-    }
-  }, [isError, error, isSuccess, data?.message,navigate]);
 
   return (
     <form
@@ -83,11 +66,13 @@ export default function ResetPassword() {
             </span>
           </div>
 
-          <button className="bg-green text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
+          <button
+            disabled={isPending}
+            className="bg-green disabled:bg-gray-400 text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+          >
             تغییر رمز عبور
           </button>
           <Link
-          
             to={"/login"}
             className="bg-green text-center text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
           >

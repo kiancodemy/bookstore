@@ -4,6 +4,7 @@ import Authentication from "./components/Authentication/Authentication";
 import { lazy, Suspense } from "react";
 import AdminSkeleton from "./components/admin/AdminSkeleton";
 import Loading from "./components/Loading/Loading";
+import Category from "./components/admin/category/Category";
 const AuthenticationSkeleton = lazy(
   () => import("@/components/Authentication/AuthenticationSkeleton"),
 );
@@ -46,7 +47,17 @@ function App() {
               path="products"
               element={
                 <Suspense fallback={<Loading></Loading>}>
-                  <div className="bg-white p-4 rounded-md">it is all about prodcuts</div>
+                  <div className="bg-white p-4 rounded-md">
+                    it is all about prodcuts
+                  </div>
+                </Suspense>
+              }
+            ></Route>
+            <Route
+              path="category"
+              element={
+                <Suspense fallback={<Loading></Loading>}>
+                  <Category></Category>
                 </Suspense>
               }
             ></Route>

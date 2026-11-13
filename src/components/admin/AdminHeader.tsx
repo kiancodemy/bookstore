@@ -7,7 +7,9 @@ type set = {
   select: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export default function AdminHeader({ select }: set) {
+
   const jwt = useAuthStore((s) => s.jwtToken);
+  const set = useAuthStore((s) => s.setJwtToken);
   const username = jwt
     ? jwtDecoder(jwt).name + " " + jwtDecoder(jwt).lastName
     : "کاربر";
@@ -16,6 +18,9 @@ export default function AdminHeader({ select }: set) {
     <div className="flex flex-col bg-white p-3 rounded-md">
       <div className="max-w-full border-y border-gray-400   flex flex-row-reverse items-center justify-between container">
         <Watch></Watch>
+        <h1 onClick={()=>set(null)}>set to null</h1>
+      
+
         <div className="md:flex  gap-x-3 *:cursor-pointer justify-center items-center">
           <GiHamburgerMenu
             onClick={() => select((prev) => !prev)}

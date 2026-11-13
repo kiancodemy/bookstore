@@ -1,14 +1,12 @@
-import toasters from "@/utility/toaster";
+
 import { type forgetpassword } from "@/type/Authnetication.Type";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useForgetPassword } from "@/hooks/forgetPassword";
+import { useForgetPassword } from "@/hooks/authentication/forgetPassword";
 type selectType = {
   select: React.Dispatch<React.SetStateAction<string>>;
 };
 export default function ForgetPassword({ select }: selectType) {
-  const navigate=useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -17,21 +15,13 @@ export default function ForgetPassword({ select }: selectType) {
     mode: "onTouched",
   });
   /// react querty settting ///
-  const { mutate, isPending, isError, data, error, isSuccess } =
+  const { mutate, isPending } =
     useForgetPassword();
   const onSubmit = (data: forgetpassword) => {
     mutate(data);
   };
   /// handling error or succes message ////
-  useEffect(() => {
-    if (isError) {
-      toasters("error", error.response?.data.message);
-    }
-    if (isSuccess) {
-      toasters("success", data.message);
-      navigate("/")
-    }
-  }, [isError, error, isSuccess, data?.message, navigate]);
+ 
 
   return (
     <form

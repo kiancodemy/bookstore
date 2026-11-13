@@ -26,8 +26,12 @@ export default function AuthenticationSkeleton() {
         )}
 
         {loginType == "login" && <LoginForm select={setLoginType}></LoginForm>}
-        {loginType == "signup" && <SignUpForm  select={setLoginType}></SignUpForm>}
-        {loginType == "forgetpassword" && <ForgetPassword  select={setLoginType}></ForgetPassword>}
+        {loginType == "signup" && (
+          <SignUpForm select={setLoginType}></SignUpForm>
+        )}
+        {loginType == "forgetpassword" && (
+          <ForgetPassword select={setLoginType}></ForgetPassword>
+        )}
       </div>
     </div>
   );

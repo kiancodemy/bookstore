@@ -1,12 +1,12 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
-import { refreshToken } from "@/hooks/RefreshToken";
+import { refreshToken } from "@/hooks/authentication/RefreshToken";
 import useAuthStore from "@/store/useAuthStore";
 
 interface RetryConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
-export const api = axios.create({ withCredentials: true });
+export const api = axios.create({ withCredentials: true,timeout:6000});
 
 // attach the current JWT to every request
 api.interceptors.request.use((config) => {

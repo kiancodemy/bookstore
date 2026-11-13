@@ -1,30 +1,15 @@
 import { FiEye } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
 import { FiEyeOff } from "react-icons/fi";
-import useAuthStore from "@/store/useAuthStore";
-
 import { FcGoogle } from "react-icons/fc";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { type LoginType } from "@/type/Authnetication.Type";
-import { useLogin } from "@/hooks/logIn";
+import { useLogin } from "@/hooks/authentication/logIn";
 import { useForm } from "react-hook-form";
-import toasters from "@/utility/toaster";
-
 
 type SelectType = {
   select: React.Dispatch<React.SetStateAction<string>>;
 };
 export default function LoginForm({ select }: SelectType) {
-
-  /// navigation fucntion
-  const navigate = useNavigate(); 
-
-
-  // zustand wjt token setterr //
-  const setJwtToken=useAuthStore((s)=>s.setJwtToken);
-  
-
-
   const [hide, setHide] = useState(true);
   //// react hook form setting ////
   const {
@@ -35,26 +20,12 @@ export default function LoginForm({ select }: SelectType) {
     mode: "onTouched",
   });
 
-  
-  
-
   /// login request  by react router////
-  const { mutate, isPending, isError, data, error,isSuccess } = useLogin();
-
+  const { mutate, isPending } = useLogin();
+  // submit form function////
   const onSubmit = (datas: LoginType) => {
     mutate(datas);
   };
-  /// handling error or succes message ////
-  useEffect(()=>{
-    if(isError){
-      toasters("error",error.response?.data.message)
-    }
-    if(isSuccess){
-      toasters("success",data.message)
-      setJwtToken(typeof data.data==="string"?data.data:null);
-      navigate("/admin"); 
-    }
-  },[isError,error,isSuccess,data?.message,navigate,setJwtToken,data?.data])
 
   return (
     <form
@@ -104,24 +75,27 @@ export default function LoginForm({ select }: SelectType) {
           {errors?.password?.message}
         </span>
       </div>
-      <button disabled={isPending} className="bg-blue-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer">
+      <button
+        disabled={isPending}
+        className="bg-blue-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+      >
         ورود
       </button>
       <button
-       onClick={()=>select("forgetpassword")}
+        onClick={() => select("forgetpassword")}
         className="hover:underline  underline-offset-7 decoration-solid decoraion-1 self-start text-sm cursor-pointer "
       >
         فراموشی رمز عبور
       </button>
       <button
+        disabled={isPending}
         type="submit"
-        className="flex cursor-pointer text-base hover:bg-gray-100 justify-center items-center gap-x-2.5 border-bordercolor border rounded-md py-2 px-6"
+        className="flex disabled:bg-gray-400  cursor-pointer text-base hover:bg-gray-100 justify-center items-center gap-x-2.5 border-bordercolor border rounded-md py-2 px-6"
       >
-        <span className="text-sm md:text-base ">ورود با گوگل</span>
-        <span className="text-2xl">
+        <span className="text-sm  md:text-base ">ورود با گوگل</span>
+        <span className="text-2xl ">
           <FcGoogle></FcGoogle>
         </span>
-       
       </button>
     </form>
   );
