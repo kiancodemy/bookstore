@@ -16,3 +16,14 @@ export interface CategoryResponse {
   message: string;
   data: Category[];
 }
+
+
+export interface CreateCategory{
+  name:string 
+}
+
+export interface updateCategory{
+  id:number,
+  active:boolean,
+  name:string 
+}

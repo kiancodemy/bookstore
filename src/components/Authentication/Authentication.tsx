@@ -21,9 +21,8 @@ export default function Authentication({
 
     const bootstrap = async () => {
       try {
-        console.log("fuck")
-        
-       await refreshToken();
+      
+        await refreshToken();
      
       } catch {
         

@@ -7,7 +7,11 @@ export const ENDPOINTS = {
   FORGETPASSWORD: "/api/v1/auth/forgetPassword",
   RESETPASSWORD: "/api/v1/auth/resetPassword",
   REFRESHTOKEN: "/api/v1/auth/refreshtoken/verify",
-  allCategory:"/api/v1/admin/categories",
+  GETALLCATEGORY: "/api/v1/admin/categories",
+  UPDATECATEGORY: "/api/v1/admin/categories",
+  CREATECATEGORY: "/api/v1/admin/categories",
+  UPDATESUBCATEGORY: "/api/v1/admin/subcategory",
+  CREATESUBCATEGORY: "/api/v1/admin/subcategory",
 };
 
 // helper to build full URLs

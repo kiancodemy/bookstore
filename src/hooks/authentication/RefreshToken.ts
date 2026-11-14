@@ -13,7 +13,6 @@ export function refreshToken(): Promise<string | null> {
     .post<LoginResponse>(apiUrl(ENDPOINTS.REFRESHTOKEN))
     .then((res) => {
       const token = typeof res.data.data === "string" ? res.data.data : null;
-      console.log(token);
       useAuthStore.getState().setJwtToken(token);
       return token;
     })

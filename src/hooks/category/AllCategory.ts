@@ -8,9 +8,10 @@ export function useAllCategory() {
   return useQuery<CategoryResponse, AxiosError<LoginResponse>>({
     queryKey: ["allcategory"],
     queryFn: async () => {
-      const res = await api.get(apiUrl(ENDPOINTS.allCategory));
+      const res = await api.get(apiUrl(ENDPOINTS.GETALLCATEGORY));
       return res.data;
     },
+   
     
   });
 }
