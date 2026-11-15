@@ -10,7 +10,6 @@ export default function AddItemButton() {
   const setcategoryModal = useModalHanlder().setcategoryModal;
   const isopen = useModalHanlder().categoryModal;
 
-
   return (
     <div>
       <button

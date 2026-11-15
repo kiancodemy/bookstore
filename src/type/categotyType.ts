@@ -20,10 +20,13 @@ export interface CategoryResponse {
 
 export interface CreateCategory{
   name:string 
+  active:boolean 
 }
 
 export interface updateCategory{
   id:number,
+  setopen:React.Dispatch<React.SetStateAction<boolean>>,
+  key:number,
   active:boolean,
   name:string 
 }

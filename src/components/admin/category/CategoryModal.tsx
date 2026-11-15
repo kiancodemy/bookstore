@@ -23,9 +23,7 @@ export default function CategoryModal() {
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-black/10 flex items-center justify-center">
       <div className="flex flex-col shadow-2xl bg-white overflow-hidden rounded-md">
-        <h1 className="bg-gray-300 text-center p-2 text-white">
-          دسته بندی ها
-        </h1>
+        <h1 className="bg-gray-300 text-center p-2 text-white">دسته بندی ها</h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-full gap-y-2 shadow-lg md:gap-y-4  p-10 rounded-md md:py-12 md:px-16  flex flex-col container"
@@ -43,6 +41,7 @@ export default function CategoryModal() {
               {errors?.name?.message}
             </span>
           </div>
+         
 
           <div className="flex gap-y-3  flex-col">
             <button

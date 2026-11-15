@@ -1,6 +1,15 @@
 import type { Category } from "@/type/categotyType";
+import { lazy, Suspense } from "react";
 import SubCategotyItem from "../subcategory/SubCategotyItem";
+import useModalHanlder from "@/store/useModals";
+import { useState } from "react";
+const UpdateCategoryModal = lazy(
+  () => import("@/components/admin/category/UpdateCategorymModal"),
+);
 export default function CategoryItem({ category }: { category: Category }) {
+  const state = useModalHanlder();
+  const [open, setopen] = useState(false);
+
   return (
     <div
       key={category.id}
@@ -19,14 +28,33 @@ export default function CategoryItem({ category }: { category: Category }) {
             <p className="bg-red-500 py-1 px-3 text-white ">غير فعال</p>
           )}
         </div>
-        <button className="flex cursor-pointer text-white px-3 bg-orange-500 rounded-md overflow-hidden items-center">
+        <button
+          onClick={() => {
+    
+            setopen(true);
+          }}
+          className="flex cursor-pointer text-white px-3 hover:bg-orange-600 bg-orange-500 rounded-md overflow-hidden items-center"
+        >
           <p className=" p-1 rounded-md لال-خقش">به روز رساني</p>
         </button>
       </div>
       <div className="flex-col bg-white rounded-md p-2 gap-y-2">
         <h1 className="justify-self-start py-2 ">نام زيردسته ها :</h1>
-        <SubCategotyItem subCategories={category.subCategories}></SubCategotyItem>
+        <SubCategotyItem
+          subCategories={category.subCategories}
+        ></SubCategotyItem>
       </div>
+      {open && (
+        <Suspense fallback={<div>loading</div>}>
+          <UpdateCategoryModal
+            setopen={setopen}
+            key={category.id}
+            id={category.id}
+            name={category.name}
+            active={category.status}
+          ></UpdateCategoryModal>
+        </Suspense>
+      )}
     </div>
   );
 }

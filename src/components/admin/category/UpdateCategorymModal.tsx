@@ -1,30 +1,56 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import type { updateCategory } from "@/type/categotyType";
 import { useUpdateCategory } from "@/hooks/category/updateCategory";
 import useModalHanlder from "@/store/useModals";
-export default function CategoryModal() {
-  // close the modal ///
-
-  const state = useModalHanlder();
+import Select from "react-select";
+import { useEffect } from "react";
+import Category from "./Category";
+export default function UpdateCategoryModal({
+  id,
+  active,
+  setopen,
+  key,
+  name,
+}: updateCategory) {
+  // zustand settng ////
+  const options = [
+    { value: true, label: "فعال" },
+    { value: false, label: "غیر فعال" }];
 
   // reacrt hook form setting ///
   const {
     register,
+    control,
+
     handleSubmit,
     formState: { errors },
-  } = useForm< updateCategory>({
+  } = useForm<updateCategory>({
     mode: "onTouched",
+    defaultValues: {
+      id,
+      name,
+      active,
+    },
   });
   /// react querty settting ///
-  const { mutate, isPending } =  useUpdateCategory();
-  const onSubmit = (data:updateCategory) => {
+  const { isSuccess, mutate, isPending } = useUpdateCategory();
+  const onSubmit = (data: updateCategory) => {
     mutate(data);
   };
+  useEffect(() => {
+    if (isSuccess) {
+      setopen(false);
+    }
+  }, [isSuccess, setopen]);
+
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-black/10 flex items-center justify-center">
+    <div
+      key={key}
+      className="fixed inset-0 backdrop-blur-sm bg-black/10 flex items-center justify-center"
+    >
       <div className="flex flex-col shadow-2xl bg-white overflow-hidden rounded-md">
         <h1 className="bg-gray-300 text-center p-2 text-white">
-          دسته بندی ها
+          به روزرسانی دسته بندی
         </h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -44,17 +70,36 @@ export default function CategoryModal() {
             </span>
           </div>
 
+          <Controller
+            control={control}
+            name="active"
+            render={({ field }) => (
+              <Select
+                className="basic-single"
+            
+                isRtl
+                options={options}
+                value={options.find((o) => o.value === field.value) ?? null}
+                onChange={(option) => field.onChange(option?.value)}
+                onBlur={field.onBlur}
+                closeMenuOnSelect
+                placeholder="وضعیت را انتخاب کنید"
+              />
+            )}
+          />
+  
+
           <div className="flex gap-y-3  flex-col">
             <button
               type="submit"
               disabled={isPending}
               className="bg-green-500  disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
             >
-              افزودن
+              اعمال تغییرات
             </button>
             <button
               type="button"
-              onClick={() => state.setcategoryModal(false)}
+              onClick={() => setopen(false)}
               disabled={isPending}
               className="bg-red-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-4 text-white rounded-md cursor-pointer"
             >
