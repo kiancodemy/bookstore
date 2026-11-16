@@ -1,4 +1,5 @@
 import "./App.css";
+import ProdcutPage from "./pages/admin/prodcut/ProdcutPage";
 import { Routes, Route } from "react-router-dom";
 import Authentication from "./components/Authentication/Authentication";
 import { lazy, Suspense } from "react";
@@ -47,16 +48,14 @@ function App() {
               path="products"
               element={
                 <Suspense fallback={<Loading></Loading>}>
-                  <div className="bg-white p-4 rounded-md">
-                    it is all about prodcuts
-                  </div>
+                  <ProdcutPage></ProdcutPage>
                 </Suspense>
               }
             ></Route>
             <Route
               path="category"
               element={
-                <Suspense fallback={<Loading></Loading>}>
+                <Suspense>
                   <Category></Category>
                 </Suspense>
               }
