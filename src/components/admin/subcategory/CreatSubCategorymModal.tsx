@@ -4,6 +4,7 @@ import useModalHanlder from "@/store/useModals";
 import { useAllCategory } from "@/hooks/category/AllCategory";
 import Select from "react-select";
 import { useCreatSubCategory } from "@/hooks/subCategory/createSubCategory";
+import { useEffect } from "react";
 export default function CreateSubCategoryModal() {
   const state = useModalHanlder();
 
@@ -26,16 +27,24 @@ export default function CreateSubCategoryModal() {
   const {
     register,
     handleSubmit,
+    reset,
     control,
     formState: { errors },
   } = useForm<CreateSubCategory>({
     mode: "onTouched",
     defaultValues: {
-      categoryId: option && option[0].value,
-      active:activptions[0].value
+      active: activptions[0].value,
     },
   });
   /// react querty settting ///
+  useEffect(() => {
+    if (option?.length) {
+      reset({
+        categoryId: option[0].value,
+        active: true,
+      });
+    }
+  }, [option, reset]);
 
   // submit form ///
   const onSubmit = (data: CreateSubCategory) => {
@@ -44,7 +53,9 @@ export default function CreateSubCategoryModal() {
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-black/10 flex items-center justify-center">
       <div className="flex flex-col  shadow-2xl bg-white overflow-hidden rounded-md">
-        <h1 className="bg-gray-300 text-center p-2 text-white">زیر دسته جدید</h1>
+        <h1 className="bg-gray-300 text-center p-2 text-white">
+          زیر دسته جدید
+        </h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-full gap-y-2  shadow-lg md:gap-y-4  p-10 rounded-md md:py-12 md:px-16  flex flex-col container"

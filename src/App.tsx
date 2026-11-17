@@ -9,6 +9,7 @@ import Category from "./components/admin/category/Category";
 const AuthenticationSkeleton = lazy(
   () => import("@/components/Authentication/AuthenticationSkeleton"),
 );
+const NewProduct = lazy(() => import("@/pages/admin/prodcut/NewProduct"));
 
 const ResetPassword = lazy(
   () => import("@/components/Authentication/ResetPassword"),
@@ -49,6 +50,14 @@ function App() {
               element={
                 <Suspense fallback={<Loading></Loading>}>
                   <ProdcutPage></ProdcutPage>
+                </Suspense>
+              }
+            ></Route>
+            <Route
+              path="newProduct"
+              element={
+                <Suspense>
+                  <NewProduct></NewProduct>
                 </Suspense>
               }
             ></Route>
