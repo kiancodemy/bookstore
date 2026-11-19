@@ -1,13 +1,12 @@
 import type { Category } from "@/type/categotyType";
 import { lazy, Suspense } from "react";
 import SubCategotyItem from "../subcategory/SubCategotyItem";
-import useModalHanlder from "@/store/useModals";
 import { useState } from "react";
 const UpdateCategoryModal = lazy(
-  () => import("@/components/admin/category/UpdateCategorymModal"),
+  () => import("@/components/admin/category/modals/UpdateCategorymModal"),
 );
 export default function CategoryItem({ category }: { category: Category }) {
-  const state = useModalHanlder();
+
   const [open, setopen] = useState(false);
 
   return (

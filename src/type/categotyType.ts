@@ -17,16 +17,19 @@ export interface CategoryResponse {
   data: Category[];
 }
 
-
-export interface CreateCategory{
-  name:string 
-  active:boolean 
+export interface CreateCategory {
+  name: string;
+  active: boolean;
 }
 
-export interface updateCategory{
-  id:number,
-  setopen:React.Dispatch<React.SetStateAction<boolean>>,
-  key:number,
-  active:boolean,
-  name:string 
+export interface updateCategory {
+  id: number;
+  setopen: React.Dispatch<React.SetStateAction<boolean>>;
+  key: number;
+  active: boolean;
+  name: string;
 }
+export const activityOptions = [
+  { value: true, label: "فعال" },
+  { value: false, label: "غیر فعال" },
+];

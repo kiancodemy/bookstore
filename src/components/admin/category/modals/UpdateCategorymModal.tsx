@@ -1,10 +1,10 @@
 import { useForm, Controller } from "react-hook-form";
 import type { updateCategory } from "@/type/categotyType";
-import { useUpdateCategory } from "@/hooks/category/updateCategory";
-import useModalHanlder from "@/store/useModals";
+import { useUpdateCategory } from "@/hooks/category/admin/updateCategory";
+import { activityOptions } from "@/type/categotyType";
 import Select from "react-select";
 import { useEffect } from "react";
-import Category from "./Category";
+
 export default function UpdateCategoryModal({
   id,
   active,
@@ -13,9 +13,6 @@ export default function UpdateCategoryModal({
   name,
 }: updateCategory) {
   // zustand settng ////
-  const options = [
-    { value: true, label: "فعال" },
-    { value: false, label: "غیر فعال" }];
 
   // reacrt hook form setting ///
   const {
@@ -76,10 +73,11 @@ export default function UpdateCategoryModal({
             render={({ field }) => (
               <Select
                 className="basic-single"
-            
                 isRtl
-                options={options}
-                value={options.find((o) => o.value === field.value) ?? null}
+                options={activityOptions}
+                value={
+                  activityOptions.find((o) => o.value === field.value) ?? null
+                }
                 onChange={(option) => field.onChange(option?.value)}
                 onBlur={field.onBlur}
                 closeMenuOnSelect
@@ -87,7 +85,6 @@ export default function UpdateCategoryModal({
               />
             )}
           />
-  
 
           <div className="flex gap-y-3  flex-col">
             <button

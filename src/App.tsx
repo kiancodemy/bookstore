@@ -64,7 +64,7 @@ function App() {
             <Route
               path="category"
               element={
-                <Suspense>
+                <Suspense fallback={<Loading></Loading>}>
                   <Category></Category>
                 </Suspense>
               }

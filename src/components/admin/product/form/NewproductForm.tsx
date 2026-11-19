@@ -1,10 +1,12 @@
-import { useEffect, useState, useMemo } from "react";
-import { useAllCategory } from "@/hooks/category/AllCategory";
+import { useState, useMemo } from "react";
+import { useAllCategory } from "@/hooks/category/admin/AllCategory";
 import ErrorBoundry from "@/components/Error/ErrorBoundry";
+import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import Select, { type SingleValue } from "react-select";
+import Select from "react-select";
 import { languageOptions } from "@/type/Product";
-import { type Language, type CreateBookType } from "@/type/Product";
+import { type CreateBookType } from "@/type/Product";
+import { useCreateNewBook } from "@/hooks/product/admin/CreateNewBook";
 
 /* ------------------------------------------------------------------ */
 /*  Options                                                            */
@@ -18,8 +20,13 @@ type subcategory = {
 
 export default function NewProductForm() {
   const [subcategory, setSubctegory] = useState<subcategory[]>([]);
+
+  /// fetch all category ////
   const { data, isLoading, isError, error, isSuccess, isPending } =
     useAllCategory();
+
+  //// uplaod new book ////
+  const { mutate } = useCreateNewBook();
 
   /// memoize category becasue it is constant
   const category = useMemo(() => {
@@ -40,11 +47,8 @@ export default function NewProductForm() {
     formState: { errors },
   } = useForm<CreateBookType>({
     mode: "onTouched",
+    defaultValues: { description: null, publisher: null, translator: null },
   });
-
-  const mutate = (data: CreateBookType) => {
-    console.log("submit", data);
-  };
 
   const onSubmit = (datas: CreateBookType) => {
     mutate(datas);
@@ -74,13 +78,13 @@ export default function NewProductForm() {
       <p className="text-center rounded-md bg-blue-500 md:text-base text-sm text-white py-4">
         فرم ثبت محصول جدید
       </p>
-      <div className="md:container md:grid md:grid-cols-2 md:gap-5 ">
-        <ErrorBoundry
-          isError={isError}
-          isLoading={isLoading}
-          isSuccess={isSuccess}
-          error={error?.response?.data.message}
-        >
+      <ErrorBoundry
+        isError={isError}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+        error={error?.response?.data.message}
+      >
+        <div className="md:container md:grid md:grid-cols-2 md:gap-5 ">
           {/* Category (react-select) */}
           <div className="flex flex-col">
             <label className={labelClass}>دسته‌بندی *</label>
@@ -233,9 +237,7 @@ export default function NewProductForm() {
                   value={
                     languageOptions.find((o) => o.value === field.value) ?? null
                   }
-                  onChange={(opt: SingleValue<SelectOption<Language>>) =>
-                    field.onChange(opt?.value)
-                  }
+                  onChange={(opt) => field.onChange(opt?.value)}
                   onBlur={field.onBlur}
                 />
               )}
@@ -247,10 +249,12 @@ export default function NewProductForm() {
 
           {/* Publication Year */}
           <div className="flex flex-col">
-            <label className={labelClass}>سال انتشار</label>
+            <label className={labelClass}>سال انتشار *</label>
             <input
               placeholder="مثلاً ۱۴۰۳"
               {...register("publicationYear", {
+                required: "سال انتشار الزامی است",
+
                 min: {
                   value: 1000,
                   message: "سال انتشار باید حداقل ۱۰۰۰ باشد",
@@ -352,26 +356,26 @@ export default function NewProductForm() {
               {errors?.stock?.message}
             </span>
           </div>
-        </ErrorBoundry>
-      </div>
-      <div className="p-2 flex flex-col md:justify-center md:items-center  gap-y-6">
-        {/* Submit */}
-        <button
-          disabled={isPending || isLoading || isError}
-          type="submit"
-          className="bg-blue-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
-        >
-          {isPending ? "در حال ذخیره..." : "ثبت کتاب"}
-        </button>
+          <div className="p-2 flex flex-col md:justify-center md:items-center  gap-y-6">
+            {/* Submit */}
+            <button
+              disabled={isPending || isLoading || isError}
+              type="submit"
+              className="bg-blue-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+            >
+              {isPending ? "در حال ذخیره..." : "ثبت کتاب"}
+            </button>
 
-        {/* Back / Cancel */}
-        <button
-          type="button"
-          className="hover:underline  bg-blue-500 underline-offset-7 decoration-solid  shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
-        >
-          بازگشت
-        </button>
-      </div>
+            {/* Back / Cancel */}
+            <Link
+              to={"/admin/products"}
+              className="hover:underline text-center  bg-blue-500 underline-offset-7 decoration-solid  shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+            >
+              بازگشت
+            </Link>
+          </div>
+        </div>
+      </ErrorBoundry>
     </form>
   );
 }

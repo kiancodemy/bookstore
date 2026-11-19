@@ -12,7 +12,6 @@ export type LoginResponse = {
   message: string;
   data: unknown;
 };
-
 export type forgetpassword = {
   email: string;
 };

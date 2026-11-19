@@ -12,7 +12,7 @@ export default function MobileDashboar({ setopen }: select) {
             to={item.direction}
             onClick={() => setopen(false)}
             key={item.id}
-            className="bg-white hover:bg-primarys hover:text-white cursor-pointer rounded-md py-2 px-12"
+            className="bg-white text-sm hover:bg-primarys hover:text-white cursor-pointer rounded-md py-2 px-12"
           >
             {item.label}
           </Link>

@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import type { CreateSubCategory } from "@/type/SubCategory";
 import useModalHanlder from "@/store/useModals";
-import { useAllCategory } from "@/hooks/category/AllCategory";
+import { useAllCategory } from "@/hooks/category/admin/AllCategory";
 import Select from "react-select";
 import { useCreatSubCategory } from "@/hooks/subCategory/createSubCategory";
 import { useEffect } from "react";

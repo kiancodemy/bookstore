@@ -38,11 +38,11 @@ export type Language = (typeof Languages)[keyof typeof Languages];
 
 export type CreateBookType = {
   title: string;
-  description?: string;
-  publisher?: string;
-  translator?: string;
+  description: string|null;
+  publisher:string|null;
+  translator:string|null;
   language: Language;
-  publicationYear?: number;
+  publicationYear: number;
   pages: number;
   price: number;
   costPrice: number;
@@ -50,3 +50,23 @@ export type CreateBookType = {
   categoryId: number;
   subcategoryId: number;
 };
+export type product = {
+  title: string;
+  coverImageUrl: string | null;
+  price: number;
+  inStock: boolean;
+};
+
+type Page = {
+  content: product[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+ 
+};
+
+export type productResponse={
+  message:string,
+  data:Page
+}

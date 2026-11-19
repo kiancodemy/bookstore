@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa6";
 
 import useModalHanlder from "@/store/useModals";
 const CategoryModals = lazy(
-  () => import("@/components/admin/category/CategoryModal"),
+  () => import("@/components/admin/category/modals/CategoryModal"),
 );
 
 export default function AddItemButton() {

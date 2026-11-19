@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import type { CreateCategory } from "@/type/categotyType";
-import { useCreateCategory } from "@/hooks/category/CreateCategory";
+import { useCreateCategory } from "@/hooks/category/admin/CreateCategory";
 import useModalHanlder from "@/store/useModals";
 export default function CategoryModal() {
   // close the modal ///

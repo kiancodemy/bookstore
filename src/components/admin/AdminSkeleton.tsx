@@ -1,8 +1,8 @@
 import { useState } from "react";
 import AdminHeader from "./AdminHeader";
 import { Outlet } from "react-router-dom";
-import Dashboard from "./Dashboard";
-import MobileDashboar from "./MobileDashboar";
+import Dashboard from "./dashboard/Dashboard";
+import MobileDashboar from "./dashboard/MobileDashboar";
 export default function AdminSkeleton() {
   const [open, setopen] = useState(false);
 

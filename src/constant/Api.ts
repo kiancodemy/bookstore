@@ -12,6 +12,8 @@ export const ENDPOINTS = {
   CREATECATEGORY: "/api/v1/admin/categories",
   UPDATESUBCATEGORY: "/api/v1/admin/subcategory",
   CREATESUBCATEGORY: "/api/v1/admin/subcategory",
+  CREATENEWBOOK: "/api/v1/admin/books",
+  GETALLADMINBOOKS: "/api/v1/book",
 };
 
 // helper to build full URLs

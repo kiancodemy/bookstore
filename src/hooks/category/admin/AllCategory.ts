@@ -7,11 +7,9 @@ import type { CategoryResponse } from "@/type/categotyType";
 export function useAllCategory() {
   return useQuery<CategoryResponse, AxiosError<LoginResponse>>({
     queryKey: ["allcategory"],
-    queryFn: async () => {
-      const res = await api.get(apiUrl(ENDPOINTS.GETALLCATEGORY));
+    queryFn: async ({ signal }) => {
+      const res = await api.get(apiUrl(ENDPOINTS.GETALLCATEGORY), { signal });
       return res.data;
     },
-   
-    
   });
 }

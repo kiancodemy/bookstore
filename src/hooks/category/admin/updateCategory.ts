@@ -2,15 +2,13 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import toasters from "@/utility/toaster";
 import type { updateCategory } from "@/type/categotyType";
-
 import { apiUrl, ENDPOINTS } from "@/constant/Api";
 import type { LoginResponse } from "@/type/Authnetication.Type";
 import { useQueryClient } from "@tanstack/react-query";
-import useModalHanlder from "@/store/useModals";
 import { api } from "@/constant/Axios";
 export function useUpdateCategory() {
   
-  const closeModal = useModalHanlder().setcategoryModal;
+
   const queryClient = useQueryClient();
 
   return useMutation<LoginResponse, AxiosError<LoginResponse>, updateCategory>({

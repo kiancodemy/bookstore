@@ -1,8 +1,8 @@
-import { useAllCategory } from "@/hooks/category/AllCategory";
+import { useAllCategory } from "@/hooks/category/admin/AllCategory";
 import CategoryItem from "./CategoryItem";
-import AddItemButton from "./AddItemButton";
+import AddItemButton from "./button/AddItemButton";
 import ErrorBoundry from "@/components/Error/ErrorBoundry";
-import AddSubCategoryButton from "../subcategory/AddSubCategoryButton";
+import AddSubCategoryButton from "../subcategory/button/AddSubCategoryButton";
 export default function Category() {
   const { data, isLoading, isError, isSuccess, error } = useAllCategory();
 

@@ -5,10 +5,11 @@ export default function ProdcutHeaderFilter() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSort = searchParams.get("sort"); // "asc" | "desc" | null
 
-  const handleClick = (query:string) => {
+  const handleClick = (query: string) => {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
-      next.set("sort", query);
+      next.set("direction", query);
+      next.set("sortBy", "price");
       return next;
     });
   };
