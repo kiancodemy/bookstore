@@ -11,7 +11,7 @@ export default function LanguageFilter() {
   };
   return (
     <div className="collapse  *:md:text-sm *:text-xs collapse-arrow bg-base-100 border border-base-300">
-      <input type="radio" name="my-accordion-2" />
+      <input type="radio" name="my-accordion-1" />
       <div className="collapse-title font-semibold">زبان</div>
       <div className="collapse-content flex flex-col gap-y-2 text-sm">
         {languageOptions.map((item) => (

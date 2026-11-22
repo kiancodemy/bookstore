@@ -356,24 +356,24 @@ export default function NewProductForm() {
               {errors?.stock?.message}
             </span>
           </div>
-          <div className="p-2 flex flex-col md:justify-center md:items-center  gap-y-6">
-            {/* Submit */}
-            <button
-              disabled={isPending || isLoading || isError}
-              type="submit"
-              className="bg-blue-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
-            >
-              {isPending ? "در حال ذخیره..." : "ثبت کتاب"}
-            </button>
+        </div>
+        <div className="p-2 flex flex-col md:justify-center md:items-center  gap-y-6">
+          {/* Submit */}
+          <button
+            disabled={isPending || isLoading || isError}
+            type="submit"
+            className="bg-blue-500 disabled:bg-gray-400 shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+          >
+            {isPending ? "در حال ذخیره..." : "ثبت کتاب"}
+          </button>
 
-            {/* Back / Cancel */}
-            <Link
-              to={"/admin/products"}
-              className="hover:underline text-center  bg-blue-500 underline-offset-7 decoration-solid  shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
-            >
-              بازگشت
-            </Link>
-          </div>
+          {/* Back / Cancel */}
+          <Link
+            to={"/admin/products"}
+            className="hover:underline text-center  bg-blue-500 underline-offset-7 decoration-solid  shadow-lg text-sm md:text-base py-2 px-6 text-white rounded-md cursor-pointer"
+          >
+            بازگشت
+          </Link>
         </div>
       </ErrorBoundry>
     </form>

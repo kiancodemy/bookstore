@@ -14,6 +14,7 @@ export const ENDPOINTS = {
   CREATESUBCATEGORY: "/api/v1/admin/subcategory",
   CREATENEWBOOK: "/api/v1/admin/books",
   GETALLADMINBOOKS: "/api/v1/book",
+  GETSingleBook: "/api/v1/book",
 };
 
 // helper to build full URLs

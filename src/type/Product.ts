@@ -51,6 +51,7 @@ export type CreateBookType = {
   subcategoryId: number;
 };
 export type product = {
+  id:number;
   title: string;
   coverImageUrl: string | null;
   price: number;

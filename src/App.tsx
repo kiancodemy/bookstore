@@ -5,11 +5,15 @@ import Authentication from "./components/Authentication/Authentication";
 import { lazy, Suspense } from "react";
 import AdminSkeleton from "./components/admin/AdminSkeleton";
 import Loading from "./components/Loading/Loading";
+
 import Category from "./components/admin/category/Category";
 const AuthenticationSkeleton = lazy(
   () => import("@/components/Authentication/AuthenticationSkeleton"),
 );
 const NewProduct = lazy(() => import("@/pages/admin/prodcut/NewProduct"));
+const UpdateItem = lazy(
+  () => import("@/components/admin/product/form/UpdateItem"),
+);
 
 const ResetPassword = lazy(
   () => import("@/components/Authentication/ResetPassword"),
@@ -52,12 +56,30 @@ function App() {
                   <ProdcutPage></ProdcutPage>
                 </Suspense>
               }
-            ></Route>
+            >
+             
+            </Route>
+             <Route
+                path="updateItem/:id"
+                element={
+                  <Suspense >
+                    <UpdateItem ></UpdateItem>
+                  </Suspense>
+                }
+              ></Route>
             <Route
               path="newProduct"
               element={
                 <Suspense>
                   <NewProduct></NewProduct>
+                </Suspense>
+              }
+            ></Route>
+            <Route
+              path="update/:id"
+              element={
+                <Suspense>
+                  <UpdateItem></UpdateItem>
                 </Suspense>
               }
             ></Route>
