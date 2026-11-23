@@ -1,15 +1,13 @@
 export interface HeaderFilterItem {
-  id: number,
-  name: string
-  query: string
-};
+  id: number;
+  name: string;
+  query: string;
+}
 
 export const HeaderFilterItems: HeaderFilterItem[] = [
   { id: 1, name: "ارزان ترین", query: "asc" },
   { id: 2, name: "گران ترین", query: "desc" },
 ];
-
-
 
 //// createt book  setting////
 export const Languages = {
@@ -38,9 +36,9 @@ export type Language = (typeof Languages)[keyof typeof Languages];
 
 export type CreateBookType = {
   title: string;
-  description: string|null;
-  publisher:string|null;
-  translator:string|null;
+  description: string | null;
+  publisher: string | null;
+  translator: string | null;
   language: Language;
   publicationYear: number;
   pages: number;
@@ -50,8 +48,41 @@ export type CreateBookType = {
   categoryId: number;
   subcategoryId: number;
 };
+export type UpdateBookType = {
+  id: number;
+  status: boolean;
+  title: string;
+  description: string | null;
+  publisher: string | null;
+  translator: string | null;
+  language: Language;
+  publicationYear: number;
+  pages: number;
+  price: number;
+  costPrice: number;
+  stock: number;
+  categoryId: number;
+  subcategoryId: number;
+};
+export type singleBook = {
+  id: number;
+  title: string;
+  description: string | null;
+  publisher: string | null;
+  translator: string | null;
+  language: Language;
+  publicationYear: number;
+  pages: number;
+  status:boolean;
+  price: number;
+  costPrice: number;
+  stock: number;
+  categoryId: number;
+
+  subCategoryId: number;
+};
 export type product = {
-  id:number;
+  id: number;
   title: string;
   coverImageUrl: string | null;
   price: number;
@@ -64,10 +95,13 @@ type Page = {
   size: number;
   totalElements: number;
   totalPages: number;
- 
 };
 
-export type productResponse={
-  message:string,
-  data:Page
-}
+export type productResponse = {
+  message: string;
+  data: Page;
+};
+export type SingBookRespopnse = {
+  message: string;
+  data: singleBook;
+};

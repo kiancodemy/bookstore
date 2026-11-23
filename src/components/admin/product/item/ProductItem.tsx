@@ -7,7 +7,7 @@ export default function ProductItem({ item }: { item: product }) {
       {item.inStock ? (
         <p className="bg-green p-2 rounded-md text-white">موجود</p>
       ) : (
-        <p className="bg-red-400 p-2 **: rounded-md text-white">نا موجود</p>
+        <p className="bg-red-600 p-2 **: rounded-md text-white">نا موجود</p>
       )}
       <div className="flex gap-x-0.5 text-sm md:text-base justify-center">
         <p>قیمت :</p>

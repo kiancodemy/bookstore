@@ -2,16 +2,16 @@ import { useState, useMemo } from "react";
 import { useAllCategory } from "@/hooks/category/admin/AllCategory";
 import ErrorBoundry from "@/components/Error/ErrorBoundry";
 import { Link } from "react-router-dom";
+import { activityOptions } from "@/type/categotyType";
+import { useEffect, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { languageOptions } from "@/type/Product";
-import { type CreateBookType } from "@/type/Product";
-import { useCreateNewBook } from "@/hooks/product/admin/CreateNewBook";
+import { type UpdateBookType } from "@/type/Product";
+import { useUPdateBook } from "@/hooks/product/admin/UpdateBook";
 import { useGetBookById } from "@/hooks/product/admin/GetBookById";
 import { useParams } from "react-router-dom";
-/* ------------------------------------------------------------------ */
-/*  Options                                                            */
-/* ------------------------------------------------------------------ */
+
 type subcategory = {
   value: number;
   label: string;
@@ -20,24 +20,26 @@ type subcategory = {
 /*  Component */
 
 export default function UpdateItem() {
+  // get boook id in params // type==string///
   const { id } = useParams();
+  // subcategory list - it changes based on the category ///
   const [subcategory, setSubctegory] = useState<subcategory[]>([]);
 
-  /// fetch single book
+  /// fetch single book///
   const {
     data: book,
     isLoading: bookLoading,
     error: bookErrorMessage,
     isError: bookError,
     isSuccess: isBookSuccess,
-  } = useGetBookById(id);
+  } = useGetBookById(Number(id));
+
   /// fetch all category ////
   const { data, isLoading, isError, error, isSuccess, isPending } =
     useAllCategory();
 
-  //// uplaod new book ////
-  const { mutate } = useCreateNewBook();
-  console.log(book);
+  ////update book  ////
+  const { mutate } = useUPdateBook();
 
   /// memoize category becasue it is constant
   const category = useMemo(() => {
@@ -51,30 +53,72 @@ export default function UpdateItem() {
     );
   }, [data]);
 
+
+  // react hook form setting///
+
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
-  } = useForm<CreateBookType>({
+  } = useForm<UpdateBookType>({
     mode: "onTouched",
     defaultValues: { description: null, publisher: null, translator: null },
   });
+  
 
-  const onSubmit = (datas: CreateBookType) => {
+  /// subting update book form ///
+  const onSubmit = (datas: UpdateBookType) => {
     mutate(datas);
   };
 
-  const handleSubCategory = (id: number) => {
-    const selectedCategory = data?.data.find((item) => item.id === id);
-    if (selectedCategory) {
-      const subcategory = selectedCategory.subCategories.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setSubctegory(subcategory);
+  /// cHANGE SUBCATEGORY BASED ON CATEGORY ///
+  const handleSubCategory = useCallback(
+    (id: number) => {
+      const selectedCategory = data?.data.find((item) => item.id === id);
+      if (selectedCategory) {
+        const subcategory = selectedCategory.subCategories.map((item) => ({
+          value: item.id,
+          label: item.name,
+        }));
+        setSubctegory(subcategory);
+      }
+    },
+    [data],
+  );
+
+
+  /// DEFAULT VALUES OF ITEMS BASE ON THE LOADING DATA ///
+
+  useEffect(() => {
+    if (isBookSuccess && book?.data && isSuccess) {
+      const bookData = book.data;
+      console.log(bookData.subCategoryId);
+
+      // Load subcategories for the selected category
+      handleSubCategory(bookData.categoryId);
+
+      // Populate form fields
+      reset({
+        status: bookData.status,
+        id: bookData.id,
+
+        categoryId: bookData.categoryId,
+        subcategoryId: bookData.subCategoryId,
+        title: bookData.title,
+        description: bookData.description,
+        publisher: bookData.publisher,
+        translator: bookData.translator,
+        language: bookData.language,
+        publicationYear: bookData.publicationYear,
+        pages: bookData.pages,
+        price: bookData.price,
+        costPrice: bookData.costPrice,
+        stock: bookData.stock,
+      });
     }
-  };
+  }, [isBookSuccess, book, reset, data, handleSubCategory, isSuccess]);
 
   const inputClass =
     "p-2 placeholder:text-sm placeholder:md:text-base border-bordercolor border focus focus:border-transparent rounded-md focus:placeholder:text-transparent focus:outline-2 focus:outline-blue-500";
@@ -116,8 +160,10 @@ export default function UpdateItem() {
                   ref={field.ref}
                   value={category?.find((o) => o.value === field.value) ?? null}
                   onChange={(opt) => {
-                    field.onChange(opt?.value);
-                    handleSubCategory(opt.value);
+                    if (opt) {
+                      field.onChange(opt.value);
+                      handleSubCategory(opt.value);
+                    }
                   }}
                   onBlur={field.onBlur}
                 />
@@ -157,6 +203,28 @@ export default function UpdateItem() {
               {errors?.subcategoryId?.message}
             </span>
           </div>
+          {/* activity options */}
+          <div className="flex flex-col">
+            <label className={labelClass}>فعالیت *</label>
+            <Controller
+              control={control}
+              name="status"
+              render={({ field }) => (
+                <Select
+                  className="basic-single"
+                  isRtl
+                  options={activityOptions}
+                  value={
+                    activityOptions.find((o) => o.value === field.value) ?? null
+                  }
+                  onChange={(option) => field.onChange(option?.value)}
+                  onBlur={field.onBlur}
+                  closeMenuOnSelect
+                  placeholder="وضعیت را انتخاب کنید"
+                />
+              )}
+            />
+          </div>
           <div className="flex  flex-col">
             <label className={labelClass}>عنوان کتاب *</label>
             <input
@@ -173,25 +241,6 @@ export default function UpdateItem() {
             />
             <span className="text-xs text-red-600 pt-2">
               {errors?.title?.message}
-            </span>
-          </div>
-
-          {/* Description */}
-          <div className="flex flex-col">
-            <label className={labelClass}>توضیحات</label>
-            <textarea
-              placeholder="توضیحات کتاب"
-              rows={4}
-              {...register("description", {
-                maxLength: {
-                  value: 400,
-                  message: "توضیحات نمی‌تواند بیشتر از ۴۰۰ کاراکتر باشد",
-                },
-              })}
-              className={inputClass}
-            />
-            <span className="text-xs text-red-600 pt-2">
-              {errors?.description?.message}
             </span>
           </div>
 
@@ -368,6 +417,25 @@ export default function UpdateItem() {
             />
             <span className="text-xs text-red-600 pt-2">
               {errors?.stock?.message}
+            </span>
+          </div>
+
+          {/* Description */}
+          <div className="flex flex-col">
+            <label className={labelClass}>توضیحات</label>
+            <textarea
+              placeholder="توضیحات کتاب"
+              rows={4}
+              {...register("description", {
+                maxLength: {
+                  value: 400,
+                  message: "توضیحات نمی‌تواند بیشتر از ۴۰۰ کاراکتر باشد",
+                },
+              })}
+              className={inputClass}
+            />
+            <span className="text-xs text-red-600 pt-2">
+              {errors?.description?.message}
             </span>
           </div>
         </div>

@@ -15,6 +15,7 @@ export const ENDPOINTS = {
   CREATENEWBOOK: "/api/v1/admin/books",
   GETALLADMINBOOKS: "/api/v1/book",
   GETSingleBook: "/api/v1/book",
+  UPDATESingleBook: "/api/v1/admin/books",
 };
 
 // helper to build full URLs
