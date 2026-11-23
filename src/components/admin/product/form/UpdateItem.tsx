@@ -11,6 +11,7 @@ import { type UpdateBookType } from "@/type/Product";
 import { useUPdateBook } from "@/hooks/product/admin/UpdateBook";
 import { useGetBookById } from "@/hooks/product/admin/GetBookById";
 import { useParams } from "react-router-dom";
+import UploadImageForm from "../Image/UploadImageForm";
 
 type subcategory = {
   value: number;
@@ -53,7 +54,6 @@ export default function UpdateItem() {
     );
   }, [data]);
 
-
   // react hook form setting///
 
   const {
@@ -66,7 +66,6 @@ export default function UpdateItem() {
     mode: "onTouched",
     defaultValues: { description: null, publisher: null, translator: null },
   });
-  
 
   /// subting update book form ///
   const onSubmit = (datas: UpdateBookType) => {
@@ -87,7 +86,6 @@ export default function UpdateItem() {
     },
     [data],
   );
-
 
   /// DEFAULT VALUES OF ITEMS BASE ON THE LOADING DATA ///
 
@@ -133,6 +131,7 @@ export default function UpdateItem() {
       <p className="text-center rounded-md bg-orange-500 md:text-base text-sm text-white py-4">
         فرم به روز رسانی محصول
       </p>
+      <UploadImageForm></UploadImageForm>
       <ErrorBoundry
         isError={isError || bookError}
         isLoading={isLoading || bookLoading}
