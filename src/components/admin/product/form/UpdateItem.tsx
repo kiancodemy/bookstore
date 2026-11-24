@@ -21,6 +21,7 @@ type subcategory = {
 /*  Component */
 
 export default function UpdateItem() {
+ 
   // get boook id in params // type==string///
   const { id } = useParams();
   // subcategory list - it changes based on the category ///
@@ -117,7 +118,7 @@ export default function UpdateItem() {
       });
     }
   }, [isBookSuccess, book, reset, data, handleSubCategory, isSuccess]);
-
+ console.log(book?.data.coverImageUrl);
   const inputClass =
     "p-2 placeholder:text-sm placeholder:md:text-base border-bordercolor border focus focus:border-transparent rounded-md focus:placeholder:text-transparent focus:outline-2 focus:outline-blue-500";
   const labelClass = "text-sm mb-1 text-gray-700";
@@ -131,7 +132,7 @@ export default function UpdateItem() {
       <p className="text-center rounded-md bg-orange-500 md:text-base text-sm text-white py-4">
         فرم به روز رسانی محصول
       </p>
-      <UploadImageForm></UploadImageForm>
+      {book?.data&&<UploadImageForm Image={book?.data?.coverImageUrl}></UploadImageForm>}
       <ErrorBoundry
         isError={isError || bookError}
         isLoading={isLoading || bookLoading}

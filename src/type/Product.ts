@@ -67,13 +67,14 @@ export type UpdateBookType = {
 export type singleBook = {
   id: number;
   title: string;
+  coverImageUrl:string|null;
   description: string | null;
   publisher: string | null;
   translator: string | null;
   language: Language;
   publicationYear: number;
   pages: number;
-  status:boolean;
+  status: boolean;
   price: number;
   costPrice: number;
   stock: number;
@@ -105,3 +106,13 @@ export type SingBookRespopnse = {
   message: string;
   data: singleBook;
 };
+
+export type UploadBookImageResponse = {
+  message: string;
+  data: { file: string };
+};
+
+export type UploadBookImageVariables= {
+  id?: number;
+  formData: FormData;
+}

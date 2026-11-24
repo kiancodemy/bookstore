@@ -2,20 +2,24 @@ import * as Progress from "@radix-ui/react-progress";
 
 import React, { useState } from "react";
 
- const UploadImageButton = () => {
+const LoadingUploadImage = () => {
   const [progress, setProgress] = useState(0);
 
   React.useEffect(() => {
     const timer = setTimeout(
-      () => (progress <= 88 ? setProgress((prev) => prev + 11) : setProgress(0)),
+      () =>
+        progress <= 88 ? setProgress((prev) => prev + 11) : setProgress(0),
       1000,
     );
     return () => clearTimeout(timer);
   }, [progress]);
 
   return (
-    <div>
-      <h1>dfdf</h1>
+    <div className="container flex p-2 flex-col items-center gap-y-3">
+      <label className="text-sm text-gray-500 text-center">
+        در حال بارگزاری
+      </label>
+
       <Progress.Root
         value={progress}
         max={100}
@@ -33,4 +37,4 @@ import React, { useState } from "react";
   );
 };
 
-export default UploadImageButton;
+export default LoadingUploadImage;

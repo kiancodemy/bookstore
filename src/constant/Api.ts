@@ -16,6 +16,7 @@ export const ENDPOINTS = {
   GETALLADMINBOOKS: "/api/v1/book",
   GETSingleBook: "/api/v1/book",
   UPDATESingleBook: "/api/v1/admin/books",
+  UPLOADBOOKIMAGE: "/api/v1/admin/books/uploadImage",
 };
 
 // helper to build full URLs
