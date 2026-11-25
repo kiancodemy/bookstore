@@ -8,7 +8,9 @@ export default function PageNumber() {
   const handleCommit = (values: number[]) => {
     const [min] = values;
     setSearchParams((prev) => {
-      prev.set("pages", String(min));
+       const next = new URLSearchParams(prev);
+      next.set("pages", String(min));
+      next.delete("page");
     
       return prev;
     });

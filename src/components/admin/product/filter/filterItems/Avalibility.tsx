@@ -7,9 +7,11 @@ export default function Availability() {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
       if (value.trim() !== "") {
-        next.set("inStock", value); // set for any defined value, even ""
+        next.set("inStock", value);
+        next.delete("page"); // set for any defined value, even ""
       } else {
-        next.delete("inStock"); // only undefined removes it
+        next.delete("inStock");
+        next.delete("page"); // only undefined removes it
       }
       return next;
     });

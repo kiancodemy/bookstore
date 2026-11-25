@@ -7,9 +7,14 @@ export default function Activity() {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
       if (value.trim() !== "") {
-        next.set("active", value); // set for any defined value, even ""
+        next.set("active", value);
+        next.delete("page");
+        // set for any defined value, even ""
       } else {
-        next.delete("active"); // only undefined removes it
+        next.delete("active");
+        next.delete("page");
+
+        // only undefined removes it
       }
       return next;
     });

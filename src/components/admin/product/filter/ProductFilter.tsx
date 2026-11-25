@@ -4,13 +4,12 @@ import PublicationYear from "./filterItems/publicationYear";
 import Activity from "./filterItems/Activity";
 import Availability from "./filterItems/Avalibility";
 import PageNumber from "./filterItems/PageNumber";
+import Search from "./filterItems/Search";
 
 export default function ProductFilter() {
-  
-
-
   return (
     <div className="flex flex-col gap-y-6 p-2 bg-background rounded-md">
+      <Search></Search>
       <LanguageFilter></LanguageFilter>
       <PriceFilter></PriceFilter>
       <PublicationYear></PublicationYear>

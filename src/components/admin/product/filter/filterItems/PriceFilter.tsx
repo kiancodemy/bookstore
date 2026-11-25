@@ -7,10 +7,13 @@ export default function PriceFilter() {
 
   const handleCommit = (values: number[]) => {
     const [min, max] = values;
+    
     setSearchParams((prev) => {
-      prev.set("minPrice", String(min));
-      prev.set("maxPrice", String(max));
-      return prev;
+       const next = new URLSearchParams(prev);
+      next.set("minPrice", String(min));
+      next.set("maxPrice", String(max));
+      next.delete("page");
+      return next
     });
   };
   return (

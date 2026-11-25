@@ -3,7 +3,7 @@ import { HeaderFilterItems } from "@/type/Product";
 import { useSearchParams } from "react-router-dom";
 export default function ProdcutHeaderFilter() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeSort = searchParams.get("sort"); // "asc" | "desc" | null
+  const activeSort = searchParams.get("direction"); // "asc" | "desc" | null
 
   const handleClick = (query: string) => {
     setSearchParams((prev) => {

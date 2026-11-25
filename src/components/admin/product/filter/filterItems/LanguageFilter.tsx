@@ -1,12 +1,14 @@
 import { languageOptions } from "@/type/Product";
 import { useSearchParams } from "react-router-dom";
 export default function LanguageFilter() {
-  const [,setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const onclick = (value: string) => {
     setSearchParams((prev) => {
-      prev.set("language", value);   // updates or adds ?language=...
-      return prev;
+      const next = new URLSearchParams(prev);
+      next.set("language", value);
+      next.delete("page"); // updates or adds ?language=...
+      return next;
     });
   };
   return (
@@ -15,11 +17,13 @@ export default function LanguageFilter() {
       <div className="collapse-title font-semibold">زبان</div>
       <div className="collapse-content flex flex-col gap-y-2 text-sm">
         {languageOptions.map((item) => (
-          <label key={item.label} className="flex cursor-pointer items-center gap-x-3 ">
+          <label
+            key={item.label}
+            className="flex cursor-pointer items-center gap-x-3 "
+          >
             <span>{item.label}</span>
             <input
               onChange={(e) => onclick(e.target.value)}
-              
               value={item.value}
               type="radio"
               name="languge"

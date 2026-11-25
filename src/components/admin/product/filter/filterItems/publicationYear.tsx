@@ -8,9 +8,11 @@ export default function PublicationYear() {
   const handleCommit = (values: number[]) => {
     const [min, max] = values;
     setSearchParams((prev) => {
-      prev.set("minprice", String(min));
-      prev.set("maxprice", String(max));
-      return prev;
+      const next = new URLSearchParams(prev);
+      next.set("minprice", String(min));
+      next.set("maxprice", String(max));
+      next.delete("page");
+      return next;
     });
   };
   return (

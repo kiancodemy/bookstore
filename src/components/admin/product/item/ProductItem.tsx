@@ -2,7 +2,7 @@ import type { product } from "@/type/Product";
 import { Link } from "react-router-dom";
 export default function ProductItem({ item }: { item: product }) {
   return (
-    <div className="p-2 md:text-base text-sm bg-white text-center rounded-md flex flex-col gap-y-3 md:gap-y-6">
+    <div className="p-6 md:text-base text-sm bg-white text-center rounded-md flex flex-col gap-y-3 md:gap-y-6">
       <p>{item.title}</p>
       {item.inStock ? (
         <p className="bg-green p-2 rounded-md text-white">موجود</p>
