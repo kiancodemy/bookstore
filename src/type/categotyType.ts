@@ -17,9 +17,18 @@ export interface CategoryResponse {
   data: Category[];
 }
 
-export interface CreateCategory {
-  name: string;
-  active: boolean;
+export interface CategoryResponse {
+  message: string;
+  data: Category[];
+}
+type orderStatus={
+  status:string,
+  Count:number
+
+}
+export interface allOrderStatusResponse{
+  message:string,
+  data:orderStatus[];
 }
 
 export interface updateCategory {

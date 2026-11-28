@@ -17,6 +17,8 @@ export const ENDPOINTS = {
   GETSingleBook: "/api/v1/book",
   UPDATESingleBook: "/api/v1/admin/books",
   UPLOADBOOKIMAGE: "/api/v1/admin/books/uploadImage",
+
+GETALLORDERSTATUS:"/api/v1/order/status"
 };
 
 // helper to build full URLs

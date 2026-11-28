@@ -7,6 +7,7 @@ import AdminSkeleton from "./components/admin/AdminSkeleton";
 import Loading from "./components/Loading/Loading";
 
 import Category from "./components/admin/category/Category";
+import Order from "./components/admin/order/Order";
 const AuthenticationSkeleton = lazy(
   () => import("@/components/Authentication/AuthenticationSkeleton"),
 );
@@ -49,6 +50,16 @@ function App() {
             }
           ></Route>
           <Route path="admin" element={<AdminSkeleton></AdminSkeleton>}>
+            <Route
+              path="orders"
+              element={
+                <Suspense>
+                  <Order></Order>
+                </Suspense>
+              }
+            >
+             
+            </Route>
             <Route
               path="products"
               element={

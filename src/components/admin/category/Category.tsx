@@ -1,6 +1,7 @@
 import { useAllCategory } from "@/hooks/category/admin/AllCategory";
 import CategoryItem from "./CategoryItem";
 import AddItemButton from "./button/AddItemButton";
+import CategoryHeader from "./header/CategoryHeader";
 import ErrorBoundry from "@/components/Error/ErrorBoundry";
 import AddSubCategoryButton from "../subcategory/button/AddSubCategoryButton";
 export default function Category() {
@@ -14,6 +15,7 @@ export default function Category() {
         isSuccess={isSuccess}
         error={error?.response?.data.message}
       >
+        <CategoryHeader></CategoryHeader>
         <div className="flex gap-x-2">
           <AddItemButton></AddItemButton>
 
